@@ -4,7 +4,8 @@ class CatRentalRequestsController < ApplicationController
 
 
   def check_current_user_ownership
-    redirect_to cat_url(Cat.find_by(id: params[:id])) if !current_user.cats.find_by(id: params[:id])
+    relevant_cat = CatRentalRequest.find_by(id: params[:id]).cat
+    redirect_to cat_url(relevant_cat) if !current_user.cats.find_by(id: relevant_cat.id)
   end
 
   def approve
